@@ -1,9 +1,10 @@
 {
 	"mcpServers":{
 		"Calculater":{
+			"type": "streamable-http",
 			"command": "",
 			"args": "",
-			"url": ""
+			"url": "http://127.0.0.1:8001/mcp"
 		}
 	}
 }

@@ -59,11 +59,7 @@ async def create_folder(path: str) -> str:
         return f"Error creating folder: {e}"
 
 
-@server.resource(
-    name="file_system_capabilities",
-    description="Read-only documentation describing file system capabilities and constraints",
-    mime_type="text/plain"
-)
+@server.resource(uri="file-system://file_system_capabilities",name="file_system_capabilities",description="Read-only documentation describing file system capabilities and constraints")
 async def file_system_capabilities() -> str:
     return """
 File Handling MCP Server – Capabilities Reference
@@ -127,3 +123,6 @@ Output rules:
 
 This prompt ensures safe, transparent, and consistent file system operations.
 """
+
+if __name__ == "__main__":
+    server.run(transport="streamable-http")

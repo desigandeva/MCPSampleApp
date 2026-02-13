@@ -11,7 +11,7 @@ class OutputSchema(BaseModel):
     result: float = Field(description="Result of the operation")
     expression: str = Field(description="Expression used for the operation")
 
-server = FastMCP("calculator", host="127.0.0.1", port=8000, stateless_http=True)
+server = FastMCP("calculator", host="127.0.0.1", port=8001, stateless_http=True)
 
 @server.tool(name="add", description="Add two numbers")
 async def add(input: InputSchema) -> OutputSchema:
@@ -63,7 +63,7 @@ async def eval(input: InputSchema) -> OutputSchema:
     result = eval(input.expression)
     return OutputSchema(result= result, expression= f"{input.expression} = {result}")
 
-@server.resource(name="calculator_capabilities", description="Read-only documentation describing calculator capabilities and constraints")
+@server.resource(uri= "calculator://calculator_capabilities")
 async def calculator_capabilities() -> str:
     return """
 Calculator MCP Server – Capabilities Reference
@@ -133,3 +133,9 @@ Output rules:
 
 This prompt is intended to ensure consistent, safe, and correct calculator tool usage.
 """
+
+if __name__ == "__main__":
+    try:
+        server.run(transport="streamable-http")
+    except Exception as e:
+        print(e)

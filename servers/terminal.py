@@ -12,7 +12,7 @@ async def terminal(command: str) -> str:
     except Exception as e:
         return f"Error: {e}"
 
-@server.resource(name="terminal_capabilities", description="Read-only documentation describing terminal capabilities and constraints")
+@server.resource(uri="terminal://terminal_capabilities",name="terminal_capabilities", description="Read-only documentation describing terminal capabilities and constraints")
 async def terminal_capabilities() -> str:
     return """
 Terminal MCP Server – Capabilities Reference
@@ -74,3 +74,6 @@ Output rules:
 
 This prompt ensures safe, transparent, and predictable terminal tool usage
 """
+
+if __name__ == "__main__":
+    server.run(transport="streamable-http")
